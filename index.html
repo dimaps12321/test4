@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Grila Chirurgie Cardiovasculara si Toracica</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            color: #1c1e21;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        h1 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 5px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #5f6368;
+            margin-bottom: 25px;
+        }
+        .section-header {
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .q-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 18px;
+            background-color: #fafafa;
+            transition: all 0.2s ease;
+        }
+        .q-card:hover {
+            border-color: #b0bec5;
+            background-color: #ffffff;
+        }
+        .q-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            color: #202124;
+        }
+        .q-type {
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+        .type-cs {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        .type-cm {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .options li {
+            margin-bottom: 8px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: background 0.15s;
+        }
+        .options label:hover {
+            background-color: #f1f3f4;
+        }
+        .options input {
+            margin-right: 12px;
+            transform: scale(1.15);
+        }
+        .btn-container {
+            position: sticky;
+            bottom: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #28a745;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .correct-ans {
+            background-color: #e8f5e9 !important;
+            border-color: #a5d6a7 !important;
+            color: #2e7d32;
+        }
+        .wrong-ans {
+            background-color: #ffebee !important;
+            border-color: #ef9a9a !important;
+            color: #c62828;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Test Grilă</h1>
+    <p class="subtitle">Chirurgie Cardiovasculară și Toracică</p>
+
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+
+        <div class="btn-container">
+            <button type="button" onclick="checkAnswers()">Verifică Răspunsurile</button>
+        </div>
+    </form>
+
+    <div id="result-box"></div>
+</div>
+
+<script>
+const quizData = [
+    // --- COMPLEMENT SIMPLU ---
+    { section: "Complement Simplu", id: "cs1", text: "1. Dintre următoarele, factor de risc pentru dezvoltarea MCC este:", type: "cs", options: { a: "Medicamente", b: "Droguri", c: "Preparate hormonale", d: "Contraceptive", e: "Toate cele enumerate, daca au loc in timpul sarcinii" }, correct: ["e"] },
+    { section: "Complement Simplu", id: "cs2", text: "2. In interventii pe cord deschis, cel mai des se utilizeaza:", type: "cs", options: { a: "Sternotomia longitudinala", b: "Toracotomia stinga", c: "Sternotomia transversa", d: "Toracotomia dreapta", e: "Acces prin ambele pleure" }, correct: ["a"] },
+    { section: "Complement Simplu", id: "cs3", text: "3. Pentru canalul arterial permeabil larg, este caracteristic urmatoarul suflu auscultativ:", type: "cs", options: { a: "Suflu sistolic", b: "Suflu sistolo-diastolic", c: "Suflu diastolic", d: "Lipsa de suflu", e: "Suflu Graham Steel" }, correct: ["b"] },
+    { section: "Complement Simplu", id: "cs4", text: "4. Ce se observa la auscultația zgomotului II la nivelul arterei pulmonare în prezența canalului arterial permeabil cu hipertensiune pulmonară?", type: "cs", options: { a: "Disocierea zgomotului II", b: "Accentuarea zgomotului II", c: "Slabirea zgomotului II", d: "Zgomotul II nu se schimba", e: "Toate cele enumerate" }, correct: ["b"] },
+    { section: "Complement Simplu", id: "cs5", text: "5. Interventie chirurgicala de urgență imediată dupa ligaturarea CAP - este necesara in următoarea situatie:", type: "cs", options: { a: "Sindromul Horner", b: "Aparitia emfizemului subcutan", c: "Drenarea abundenta de sânge pe tuburile de dren", d: "Aparitia aerului in cavitatea pleurala", e: "Atelectazia lobului pulmonar" }, correct: ["c"] },
+    { section: "Complement Simplu", id: "cs6", text: "6. La prezenta ferestrei aorto - pulmonare cu diametru mic, auscultative se determina:", type: "cs", options: { a: "Suflu sistolic", b: "Suflu diastolic", c: "Suflu sistolo-diastolic", d: "Nu este prezent suflu", e: "Suflu sistolic pe artera pulmonara" }, correct: ["c"] },
+    { section: "Complement Simplu", id: "cs7", text: "7. La fereastra aorto - pulmonara mare, pe artera pulmonara, zgomotul II:", type: "cs", options: { a: "Nu se schimba", b: "Este slab", c: "Este disociat", d: "Este accentuat", e: "Lipseste" }, correct: ["d"] },
+    { section: "Complement Simplu", id: "cs8", text: "8. La DSV (defect septal ventricular) cu suntare stinga - dreapta, se determina supraumplerea:", type: "cs", options: { a: "Ventriculului drept", b: "Ventriculului sting", c: "Ambelor ventricule", d: "Atriului drept", e: "Atriului sting" }, correct: ["b"] },
+    { section: "Complement Simplu", id: "cs9", text: "9. Închiderea de sine stătătoare a DSV este posibil de obicei la vârsta de:", type: "cs", options: { a: "Pina la 1 an", b: "Până la 4 ani", c: "Dupa 4 ani", d: "DSV nu se inchide singur niciodata", e: "La orice virsta" }, correct: ["a"] },
+    { section: "Complement Simplu", id: "cs10", text: "10. Cel mai frecvent se intilneste urmatoarea forma de stenoza izolata a arterei pulmonare:", type: "cs", options: { a: "Supravalvulara", b: "Valvulara", c: "Subvalvulara", d: "Combinata", e: "Toate din cele enumerate" }, correct: ["b"] },
+
+    // --- COMPLEMENT MULTIPLU ---
+    { section: "Complement Multiplu", id: "cm1", text: "1. Canalul arterial permeabil duce la:", type: "cm", options: { a: "Hipervolemie in circuitul mic", b: "Hipovolemie in circuitul mic", c: "Hipertensiune in circuitul mic", d: "Raspunsurile corecte A si B", e: "Toate cele enumerate" }, correct: ["a", "c"] },
+    { section: "Complement Multiplu", id: "cm2", text: "2. Canalul arterial permeabil larg, se complica cel mai frecvent cu:", type: "cm", options: { a: "Endocardita bacteriana", b: "Dereglari di ritm cardiac", c: "Hipertensiune pulmonara", d: "Insuficienta circulatorie", e: "Hipertensiune arterială" }, correct: ["a", "c", "d"] },
+    { section: "Complement Multiplu", id: "cm3", text: "3. Indicatie pentru interventie chirurgicala de inchiderea a DSV la un copil mai mic de 1 an, este:", type: "cm", options: { a: "Şunt mare stinga dreapta", b: "Cresterea tensiunii pulmonare", c: "Infectii respiratorii frecvente", d: "Hipotrofie", e: "Vârsta copilului" }, correct: ["a", "b", "c", "d"] },
+    { section: "Complement Multiplu", id: "cm4", text: "4. Pentru canalul atrioventricular de tip complet este caracteristic:", type: "cm", options: { a: "Comunicare la nivel de atrii", b: "Comunicare la nivel de ventricule", c: "Inele fibroase a valvelor atrioventriculare sunt formate corect", d: "Clivajul cuspelor valvelor tricuspide si mitrale formeaza doua cuspe ventral si dorsala", e: "Comunicare comuna atrio-ventriculara" }, correct: ["a", "b", "d", "e"] },
+    { section: "Complement Multiplu", id: "cm5", text: "5. Angiografic, la stenoza valvulara izolata a arterei pulmonare se evidentiaza:", type: "cm", options: { a: "Dilatarea poststenotica a trunchiului arterei pulmonare", b: "Ingustarea tractului de ejectie a ventriculului drept in sistola", c: "Dilatarea tractului de ejectie a ventriculului drept in diastole", d: "Regurgitarea substantei de contrast in atriul drept", e: "Ingustarea aortei ascendente" }, correct: ["a", "b", "c"] }
+];
+
+function renderQuiz() {
+    const container = document.getElementById("quizContainer");
+    let currentSection = "";
+
+    quizData.forEach((q) => {
+        if (q.section !== currentSection) {
+            currentSection = q.section;
+            const secHeader = document.createElement("div");
+            secHeader.className = "section-header";
+            secHeader.innerText = currentSection;
+            container.appendChild(secHeader);
+        }
+
+        const card = document.createElement("div");
+        card.className = "q-card";
+        card.id = `card-${q.id}`;
+
+        const typeBadge = `<span class="q-type ${q.type === 'cs' ? 'type-cs' : 'type-cm'}">${q.type === 'cs' ? 'Complement Simplu' : 'Complement Multiplu'}</span>`;
+        
+        let html = `<div class="q-title">${q.text} ${typeBadge}</div><ul class="options">`;
+
+        for (let opt in q.options) {
+            const inputType = q.type === "cs" ? "radio" : "checkbox";
+            html += `
+                <li>
+                    <label id="lbl-${q.id}-${opt}">
+                        <input type="${inputType}" name="${q.id}" value="${opt}">
+                        <strong>${opt.toUpperCase()}.</strong>&nbsp;${q.options[opt]}
+                    </label>
+                </li>
+            `;
+        }
+        html += `</ul>`;
+        card.innerHTML = html;
+        container.appendChild(card);
+    });
+}
+
+function checkAnswers() {
+    let totalScore = 0;
+
+    quizData.forEach((q) => {
+        const selected = Array.from(document.querySelectorAll(`input[name="${q.id}"]:checked`)).map(el => el.value);
+        const card = document.getElementById(`card-${q.id}`);
+        
+        // Clear previous classes
+        for (let opt in q.options) {
+            const label = document.getElementById(`lbl-${q.id}-${opt}`);
+            label.classList.remove("correct-ans", "wrong-ans");
+        }
+
+        const isCorrect = q.correct.length === selected.length && q.correct.every(val => selected.includes(val));
+
+        if (isCorrect) {
+            totalScore++;
+        }
+
+        // Highlight correct options
+        q.correct.forEach(opt => {
+            document.getElementById(`lbl-${q.id}-${opt}`).classList.add("correct-ans");
+        });
+
+        // Highlight wrong selections
+        selected.filter(opt => !q.correct.includes(opt)).forEach(opt => {
+            document.getElementById(`lbl-${q.id}-${opt}`).classList.add("wrong-ans");
+        });
+    });
+
+    const resultBox = document.getElementById("result-box");
+    resultBox.style.display = "block";
+    resultBox.innerText = `Punctaj obținut: ${totalScore} din ${quizData.length} (${Math.round((totalScore / quizData.length) * 100)}%)`;
+    
+    if (totalScore === quizData.length) {
+        resultBox.style.backgroundColor = "#d4edda";
+        resultBox.style.color = "#155724";
+    } else {
+        resultBox.style.backgroundColor = "#fff3cd";
+        resultBox.style.color = "#856404";
+    }
+
+    resultBox.scrollIntoView({ behavior: 'smooth' });
+}
+
+window.onload = renderQuiz;
+</script>
+
+</body>
+</html>
